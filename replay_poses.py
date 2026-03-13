@@ -33,11 +33,10 @@ MOTORS = {
 
 def load_calibration(robot_id: str) -> dict[str, MotorCalibration]:
     import draccus
-    from lerobot.utils.constants import HF_LEROBOT_CALIBRATION, ROBOTS
 
-    fpath = HF_LEROBOT_CALIBRATION / ROBOTS / "so_follower" / f"{robot_id}.json"
+    fpath = Path(__file__).parent / f"{robot_id}.json"
     if not fpath.is_file():
-        raise FileNotFoundError(f"Calibration file not found: {fpath}\nRun lerobot-calibrate first.")
+        raise FileNotFoundError(f"Calibration file not found: {fpath}")
     with open(fpath) as f, draccus.config_type("json"):
         return draccus.load(dict[str, MotorCalibration], f)
 
